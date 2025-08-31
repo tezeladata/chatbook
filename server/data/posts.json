@@ -1,0 +1,40 @@
+[
+  {
+    "title": "Mastering Async/Await in JavaScript",
+    "content": "Async/await makes handling asynchronous code in JavaScript much cleaner and easier to read. This post explains how to use it effectively with examples.",
+    "author": "Ana",
+    "tags": ["JavaScript", "Async", "Promises"],
+    "likes": 145,
+    "comments": [
+      { "user": "Luka", "text": "This clarified async for me, thanks!" },
+      { "user": "Nika", "text": "Very practical explanation!" }
+    ],
+    "isPublished": true,
+    "createdAt": "2025-08-20T14:45:00.000Z"
+  },
+  {
+    "title": "CSS Grid vs Flexbox: When to Use Which?",
+    "content": "Both CSS Grid and Flexbox are powerful layout systems. Learn when to use each one with real-world examples.",
+    "author": "Giorgi",
+    "tags": ["CSS", "Web Design", "Frontend"],
+    "likes": 87,
+    "comments": [
+      { "user": "Ana", "text": "Finally understand when to use grid vs flex!" }
+    ],
+    "isPublished": true,
+    "createdAt": "2025-08-25T09:30:00.000Z"
+  },
+  {
+    "title": "Introduction to Node.js",
+    "content": "Node.js allows you to run JavaScript on the server. This post covers the basics and how to set up your first project.",
+    "author": "Nika",
+    "tags": ["Node.js", "JavaScript", "Backend"],
+    "likes": 112,
+    "comments": [
+      { "user": "Luka", "text": "Great beginner-friendly explanation!" },
+      { "user": "Giorgi", "text": "Helped me start my first server!" }
+    ],
+    "isPublished": true,
+    "createdAt": "2025-08-28T16:10:00.000Z"
+  }
+]
