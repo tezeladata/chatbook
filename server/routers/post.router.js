@@ -1,17 +1,24 @@
 import express from "express";
+
+// model
 import { Post } from "../models/post.model.js";
+
+// controllers
+import { createPost, deletePost, getPost, getPosts, updatePost } from "../controllers/post.controllers.js";
 
 export const postRouter = express.Router();
 
+// Get all posts
+postRouter.get("/", getPosts)
+
+// Get post by ID
+postRouter.get("/:id", getPost)
+
 // To create post
-postRouter.post("/", async (req, res) => {
-    const {title, content} = req.body;
+postRouter.post("/", createPost)
 
-    const newPost = await Post.create({
-        title,
-        content,
-        likesCount: 0
-    })
+// Delete post by ID
+postRouter.delete("/:id", deletePost)
 
-    res.status(201).json(newPost)
-})
+// Update post by ID
+postRouter.patch("/:id", updatePost)
