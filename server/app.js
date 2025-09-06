@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import mongoose from "mongoose";
 import { postRouter } from "./routers/post.router.js";
+import { userRouter } from "./routers/user.router.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 
 // Using routers
 app.use("/api/posts", postRouter)
+app.use("/api/users", userRouter)
 
 mongoose.connect(process.env.DATABASE_URL)
     .then(() => {
