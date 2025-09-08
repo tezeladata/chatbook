@@ -4,7 +4,7 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import { postRouter } from "./routers/post.router.js";
 import { userRouter } from "./routers/user.router.js";
-import { globalErrorHanlder } from "./controllers/error.controller.js";
+import { globalErrorHandler } from "./controllers/error.controller.js";
 
 dotenv.config();
 
@@ -21,7 +21,7 @@ app.use("/api/posts", postRouter)
 app.use("/api/users", userRouter)
 
 // Global error handling middleware
-app.use(globalErrorHanlder)
+app.use(globalErrorHandler)
 
 
 mongoose.connect(process.env.DATABASE_URL)
