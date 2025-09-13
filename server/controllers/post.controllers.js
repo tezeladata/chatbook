@@ -2,11 +2,33 @@ import { Post } from "../models/post.model.js";
 import { AppError } from "../utils/appError.js";
 import { catchAsync } from "../utils/catchAsync.js";
 
-export const getPosts = catchAsync(async (req, res) => {
-    const post = await Post.find();
+const formatMongoQuery = (query) => {
+    const mongoQuery = {};
 
-    res.status(200).json(post)
-})
+    for (const [key, value] of Object.entries(query)) {
+        const match = key.match(/^(.+)\[(gte|gt|lte|lt)\]$/);
+        if (match) {
+            const [, field, op] = match;
+            mongoQuery[field] = {
+                ...mongoQuery[field],
+                [`$${op}`]: isNaN(value) ? value : Number(value)
+            };
+        } else {
+            mongoQuery[key] = isNaN(value) ? value : Number(value);
+        }
+    }
+
+    return mongoQuery;
+}
+
+export const getPosts = async (req, res) => {
+    const { sort, ...filters } = req.query;
+    const mongoQuery = formatMongoQuery(filters);
+    
+    const posts = await Post.find(mongoQuery).sort(sort);
+
+    res.status(200).json(posts);  
+};
 
 export const getPost = catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id);
