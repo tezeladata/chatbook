@@ -16,7 +16,19 @@ const postSchema = new mongoose.Schema(
         likesCount: {
             type: Number,
             default: 0
-        }
+        },
+        comments: [
+            {
+                content: {
+                    type: String,
+                    required: [true, "comment content is required"]
+                },
+                author: {
+                    type: String,
+                    required: [true, "author is required"]
+                }
+            }
+        ]
     }
 )
 
