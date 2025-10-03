@@ -1,40 +1,72 @@
 [
   {
-    "title": "Mastering Async/Await in JavaScript",
-    "content": "Async/await makes handling asynchronous code in JavaScript much cleaner and easier to read. This post explains how to use it effectively with examples.",
-    "author": "Ana",
-    "tags": ["JavaScript", "Async", "Promises"],
-    "likes": 145,
-    "comments": [
-      { "user": "Luka", "text": "This clarified async for me, thanks!" },
-      { "user": "Nika", "text": "Very practical explanation!" }
-    ],
-    "isPublished": true,
-    "createdAt": "2025-08-20T14:45:00.000Z"
+    "title": "David",
+    "content": "My name is David",
+    "likesCount": 0,
+    "tags": ["good", "great"],
+    "__v": 0
   },
   {
-    "title": "CSS Grid vs Flexbox: When to Use Which?",
-    "content": "Both CSS Grid and Flexbox are powerful layout systems. Learn when to use each one with real-world examples.",
-    "author": "Giorgi",
-    "tags": ["CSS", "Web Design", "Frontend"],
-    "likes": 87,
-    "comments": [
-      { "user": "Ana", "text": "Finally understand when to use grid vs flex!" }
-    ],
-    "isPublished": true,
-    "createdAt": "2025-08-25T09:30:00.000Z"
+    "title": "Alice",
+    "content": "I love painting and art",
+    "likesCount": 2,
+    "tags": ["creative", "artist"],
+    "__v": 0
   },
   {
-    "title": "Introduction to Node.js",
-    "content": "Node.js allows you to run JavaScript on the server. This post covers the basics and how to set up your first project.",
-    "author": "Nika",
-    "tags": ["Node.js", "JavaScript", "Backend"],
-    "likes": 112,
-    "comments": [
-      { "user": "Luka", "text": "Great beginner-friendly explanation!" },
-      { "user": "Giorgi", "text": "Helped me start my first server!" }
-    ],
-    "isPublished": true,
-    "createdAt": "2025-08-28T16:10:00.000Z"
+    "title": "John",
+    "content": "I am a software developer",
+    "likesCount": 5,
+    "tags": ["coding", "technology"],
+    "__v": 0
+  },
+  {
+    "title": "Emma",
+    "content": "Nature photography is my passion",
+    "likesCount": 3,
+    "tags": ["nature", "photography"],
+    "__v": 0
+  },
+  {
+    "title": "Michael",
+    "content": "I play basketball every weekend",
+    "likesCount": 4,
+    "tags": ["sports", "fitness"],
+    "__v": 0
+  },
+  {
+    "title": "Sophia",
+    "content": "Cooking brings me happiness",
+    "likesCount": 6,
+    "tags": ["food", "lifestyle"],
+    "__v": 0
+  },
+  {
+    "title": "James",
+    "content": "Reading books is my favorite hobby",
+    "likesCount": 1,
+    "tags": ["books", "knowledge"],
+    "__v": 0
+  },
+  {
+    "title": "Olivia",
+    "content": "Traveling the world is my dream",
+    "likesCount": 7,
+    "tags": ["travel", "adventure"],
+    "__v": 0
+  },
+  {
+    "title": "Ethan",
+    "content": "I am learning guitar",
+    "likesCount": 2,
+    "tags": ["music", "hobby"],
+    "__v": 0
+  },
+  {
+    "title": "Isabella",
+    "content": "Fitness is a way of life",
+    "likesCount": 8,
+    "tags": ["health", "motivation"],
+    "__v": 0
   }
 ]

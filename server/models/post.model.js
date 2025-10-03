@@ -17,16 +17,21 @@ const postSchema = new mongoose.Schema(
             type: Number,
             default: 0
         },
-        comments: [
+        // comments: [
+        //     {
+        //         content: {
+        //             type: String,
+        //             required: [true, "comment content is required"]
+        //         },
+        //         author: {
+        //             type: String,
+        //             required: [true, "author is required"]
+        //         }
+        //     }
+        // ],
+        tags: [
             {
-                content: {
-                    type: String,
-                    required: [true, "comment content is required"]
-                },
-                author: {
-                    type: String,
-                    required: [true, "author is required"]
-                }
+                type: String
             }
         ]
     }

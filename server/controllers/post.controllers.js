@@ -22,8 +22,12 @@ const formatMongoQuery = (query) => {
 }
 
 export const getPosts = async (req, res) => {
-    const { sort, ...filters } = req.query;
+    const { sort, tags, ...filters } = req.query;
     const mongoQuery = formatMongoQuery(filters);
+
+    if (tags) {
+        mongoQuery.tags = {$all: tags.split(",")}
+    }
     
     const posts = await Post.find(mongoQuery).sort(sort);
 
@@ -41,11 +45,12 @@ export const getPost = catchAsync(async (req, res, next) => {
 })
 
 export const createPost = catchAsync(async (req, res) => {
-    const {title, content} = req.body;
+    const {title, content, tags} = req.body;
 
     const newPost = await Post.create({
         title,
         content,
+        tags
     });
 
     res.status(201).json(newPost)
