@@ -66,7 +66,7 @@ export const deletePost = catchAsync(async (req, res) => {
     res.status(204).send();
 })
 
-export const updatePost = catchAsync(async (req, res) => {
+export const updatePost = catchAsync(async (req, res, next) => {
     const { title, content } = req.body;
     const { id } = req.params;
 
