@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import mongoose from "mongoose";
 import { postRouter } from "./routers/post.router.js";
-import { userRouter } from "./routers/user.router.js";
 import { globalErrorHandler } from "./controllers/error.controller.js";
+import { authRouter } from "./routers/auth.router.js";
 
 dotenv.config();
 
@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === "development"){
 app.use(express.json());
 // Using routers
 app.use("/api/posts", postRouter)
-app.use("/api/users", userRouter)
+app.use("/api/users", authRouter)
 
 // Global error handling middleware
 app.use(globalErrorHandler)

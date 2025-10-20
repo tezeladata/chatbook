@@ -2,21 +2,29 @@ import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema(
     {
-        user: {
+        fullname: {
             type: String,
-            required: true,
-            unique: true
+            required: [true, "fullname is required"]
         },
         email: {
             type: String,
-            required: true,
-            unique: true
+            required: [true, "email is required"],
+            unique: [true, "email must be unique"]
         },
-        age: {
-            type: Number,
-            required: true
+        photo: String,
+        role: {
+            enum: ["user", "admin", "moderator"],
+            default: "user",
+            type: String
+        },
+        password: {
+            type: String,
+            required: [true, 'Password is required'],
+            minLength: [6, 'Password must be at least 6 characters'],
+            select: false
         }
-    }
+    },
+    {timestamps: true}
 )
 
 export const User = mongoose.model("Users", userSchema)
