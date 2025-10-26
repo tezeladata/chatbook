@@ -18,11 +18,10 @@ if (process.env.NODE_ENV === "development"){
 app.use(express.json());
 // Using routers
 app.use("/api/posts", postRouter)
-app.use("/api/users", authRouter)
+app.use("/api/auth", authRouter);
 
 // Global error handling middleware
 app.use(globalErrorHandler)
-
 
 mongoose.connect(process.env.DATABASE_URL)
     .then(() => {
