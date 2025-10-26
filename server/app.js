@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === "development"){
 app.use(express.json());
 // Using routers
 app.use("/api/posts", postRouter)
-app.use("/api/auth", authRouter);
+app.use("/api/auth", authRouter)
 
 // Global error handling middleware
 app.use(globalErrorHandler)
