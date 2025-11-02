@@ -3,6 +3,32 @@ import { User } from "../models/user.model.js"
 import { AppError } from "../utils/appError.js";
 import jwt from "jsonwebtoken"
 
+const signToken = user => {
+    return jwt.sign({
+        id: user._id,
+        role: user.role
+    }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES
+    })
+};
+
+const createSendToken = (user, statusCode, res) => {
+    const token = signToken(user);
+
+    res.cookie('lt', token, {
+        maxAge: process.env.COOKIE_EXPIRES*24*60*60*1000,
+        secure: process.env.NODE_ENV === "development" ? false : true,
+        httpOnly: true,
+        sameSite: "Lax"
+    })
+
+    res.status(statusCode).json({
+        data: {
+            user
+        }
+    })
+}
+
 // Signup
 export const signUp = catchAsync(async (req, res, next) => {
     const {email, password, fullname} = req.body;
@@ -27,23 +53,6 @@ export const login = catchAsync(async (req, res, next) => {
 
     user.password = undefined
 
-    const token = jwt.sign({
-        id: user._id,
-        role: user.role
-    }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES
-    })
-
-    res.cookie('token', token, {
-        maxAge: process.env.COOKIE_EXPIRES*24*60*60*1000,
-        secure: process.env.NODE_ENV === "development" ? false : true,
-        httpOnly: true,
-        sameSite: "Lax"
-    })
-
-    res.status(200).json({
-        data: {
-            user
-        }
-    })
+    createSendToken(user, 200, res);
 })
+

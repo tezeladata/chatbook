@@ -1,10 +1,8 @@
 import express from "express";
 
-// model
-import { Post } from "../models/post.model.js";
-
 // controllers
 import { createPost, deletePost, getPost, getPosts, updatePost } from "../controllers/post.controllers.js";
+import { protect } from "../middlewares/auth.middleware.js";
 
 export const postRouter = express.Router();
 
@@ -15,7 +13,7 @@ postRouter.get("/", getPosts)
 postRouter.get("/:id", getPost)
 
 // To create post
-postRouter.post("/", createPost)
+postRouter.post("/", protect, createPost)
 
 // Delete post by ID
 postRouter.delete("/:id", deletePost)
