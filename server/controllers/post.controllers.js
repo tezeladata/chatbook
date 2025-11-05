@@ -48,6 +48,8 @@ export const createPost = catchAsync(async (req, res) => {
     const {title, content, tags} = req.body;
 
     const newPost = await Post.create({
+        userId: req.user._id,
+        fullname: req.user.fullname,
         title,
         content,
         tags
@@ -56,12 +58,14 @@ export const createPost = catchAsync(async (req, res) => {
     res.status(201).json(newPost)
 })
 
-export const deletePost = catchAsync(async (req, res) => {
-    const post = await Post.findByIdAndDelete(req.params.id);
+export const deletePost = catchAsync(async (req, res, next) => {
+    const post = await Post.findById(req.params.id);
 
-    if (!post){
-        return next(new AppError("Post not found", 404))
-    };
+    if(post.userId != req.user._id.toString()){
+        return next(new AppError("you do not have permission to delete other user's post", 401))
+    }
+
+    await Post.findByIdAndDelete(req.params.id)
 
     res.status(204).send();
 })

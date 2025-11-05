@@ -2,12 +2,12 @@ import express from "express";
 
 // controllers
 import { createPost, deletePost, getPost, getPosts, updatePost } from "../controllers/post.controllers.js";
-import { protect } from "../middlewares/auth.middleware.js";
+import { allowedTo, protect } from "../middlewares/auth.middleware.js";
 
 export const postRouter = express.Router();
 
 // Get all posts
-postRouter.get("/", getPosts)
+postRouter.get("/", protect, allowedTo("admin"), getPosts)
 
 // Get post by ID
 postRouter.get("/:id", getPost)
@@ -16,7 +16,7 @@ postRouter.get("/:id", getPost)
 postRouter.post("/", protect, createPost)
 
 // Delete post by ID
-postRouter.delete("/:id", deletePost)
+postRouter.delete("/:id", protect, deletePost)
 
 // Update post by ID
 postRouter.patch("/:id", updatePost)

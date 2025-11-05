@@ -2,6 +2,16 @@ import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema(
     {
+        userId: {
+            type: mongoose.Types.ObjectId,
+            reference: "User",
+            required: true
+        },
+        fullname: {
+            type: String,
+            required: true
+        },
+        profilePhoto: String,
         title: {
             type: String,
             required: [true, 'title is required'],
