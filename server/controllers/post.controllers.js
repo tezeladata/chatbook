@@ -61,6 +61,10 @@ export const createPost = catchAsync(async (req, res) => {
 export const deletePost = catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id);
 
+    if (!post){
+        return next(new AppError("post not found", 404))
+    }
+
     if(post.userId != req.user._id.toString()){
         return next(new AppError("you do not have permission to delete other user's post", 401))
     }
@@ -78,6 +82,10 @@ export const updatePost = catchAsync(async (req, res, next) => {
 
     if (!post) {
         return next(new AppError("Post not found", 404))
+    }
+
+    if(post.userId != req.user._id.toString()){
+        return next(new AppError("you do not have permission to edit other user's post", 401))
     }
 
     if(title) post.title = title

@@ -5,7 +5,7 @@ import {User} from "../models/user.model.js"
 export const allowedTo = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)){
-            return next(new AppError("You do not have permission to this", 401))
+            return next(new AppError("you are not allowed to do this operation", 401))
         }
 
         next()

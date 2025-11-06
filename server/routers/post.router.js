@@ -7,7 +7,7 @@ import { allowedTo, protect } from "../middlewares/auth.middleware.js";
 export const postRouter = express.Router();
 
 // Get all posts
-postRouter.get("/", protect, allowedTo("admin"), getPosts)
+postRouter.get("/", protect, getPosts)
 
 // Get post by ID
 postRouter.get("/:id", getPost)
@@ -19,4 +19,4 @@ postRouter.post("/", protect, createPost)
 postRouter.delete("/:id", protect, deletePost)
 
 // Update post by ID
-postRouter.patch("/:id", updatePost)
+postRouter.patch("/:id", protect, updatePost)
