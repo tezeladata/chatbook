@@ -1,7 +1,8 @@
 import { catchAsync } from "../utils/catchAsync.js"
 import { User } from "../models/user.model.js"
 import { AppError } from "../utils/appError.js";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
+import {sendEmail} from "../utils/email.js"
 
 const signToken = user => {
     return jwt.sign({
@@ -39,7 +40,14 @@ export const signUp = catchAsync(async (req, res, next) => {
         fullname
     });
 
-    res.status(201).json({status: "success", message: "user created"})
+    const code = newUser.createVerificationCode();
+    await newUser.save({validateBeforeSave: false});
+
+    const url = `${req.protocol}://${req.get("host")}/api/auth/verify/${code}`
+
+    sendEmail(email, "Welcome to chatbook", url);
+
+    res.status(201).json({status: "success", message: "user created, please verify your email"})
 })
 
 export const login = catchAsync(async (req, res, next) => {
@@ -54,5 +62,20 @@ export const login = catchAsync(async (req, res, next) => {
     user.password = undefined
 
     createSendToken(user, 200, res);
-})
+});
 
+export const verifyEmail = catchAsync(async (req, res, next) => {
+    const {code} = req.params;
+
+    const user = await User.findOne({verificationCode: code});
+
+    if (!user) {
+        return next(new AppError("verification code is invalid!", 400))
+    }
+
+    user.isVerified = true;
+    user.verificationCode = undefined;
+    await user.save({validateBeforeSave: false});
+
+    res.status(200).send("<h1>User is verified</h1>")
+})

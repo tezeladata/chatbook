@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 
 const userSchema = mongoose.Schema(
     {
@@ -23,7 +24,13 @@ const userSchema = mongoose.Schema(
             required: [true, 'Password is required'],
             minLength: [6, 'Password must be at least 6 characters'],
             select: false
-        }
+        },
+        isVerified: {
+            type: Boolean,
+            default: false
+        },
+        verificationCode: String,
+        // verificationCodeExpires: Date
     },
     {timestamps: true}
 )
@@ -42,4 +49,11 @@ userSchema.methods.comparePassword = async function (candidatePassword, password
     return await bcrypt.compare(candidatePassword, password);
 };
 
-export const User = mongoose.model("Users", userSchema);
+// creating verification code
+userSchema.methods.createVerificationCode = function () {
+    const code = crypto.randomBytes(12).toString("hex");
+    this.verificationCode = code;
+    return code
+}
+
+export const User = mongoose.model("Users", userSchema)
