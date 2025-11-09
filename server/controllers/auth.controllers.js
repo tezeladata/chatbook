@@ -43,9 +43,96 @@ export const signUp = catchAsync(async (req, res, next) => {
     const code = newUser.createVerificationCode();
     await newUser.save({validateBeforeSave: false});
 
-    const url = `${req.protocol}://${req.get("host")}/api/auth/verify/${code}`
+    const url = `${req.protocol}://${req.get("host")}/api/auth/verify/${code}`;
 
-    sendEmail(email, "Welcome to chatbook", url);
+    const html = `
+    <!DOCTYPE html>
+    <html lang="en" style="margin:0; padding:0;">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Verify Your Email</title>
+        <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f5f6fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .header {
+            background-color: #4f46e5;
+            color: #ffffff;
+            padding: 30px 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 30px 40px;
+            color: #333333;
+        }
+        .content h2 {
+            margin-top: 0;
+            color: #111827;
+        }
+        .content p {
+            line-height: 1.6;
+            font-size: 15px;
+            margin: 10px 0;
+        }
+        .button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 30px;
+            background-color: #4f46e5;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .button:hover {
+            background-color: #4338ca;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #6b7280;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <div class="header">
+            <h1>Welcome to ChatBook 🎉</h1>
+        </div>
+        <div class="content">
+            <h2>Hello ${fullname},</h2>
+            <p>Thank you for signing up for <strong>ChatBook</strong>!</p>
+            <p>Please verify your email address to activate your account.</p>
+            <a href="${url}" class="button">Verify My Email</a>
+            <p>If you didn’t create a ChatBook account, please ignore this email.</p>
+        </div>
+        <div class="footer">
+            <p>© ${new Date().getFullYear()} ChatBook. All rights reserved.</p>
+        </div>
+        </div>
+    </body>
+    </html>
+    `;
+
+    sendEmail(email, "Welcome to chatbook", html);
 
     res.status(201).json({status: "success", message: "user created, please verify your email"})
 })
@@ -56,6 +143,10 @@ export const login = catchAsync(async (req, res, next) => {
     const user = await User.findOne({ email }).select("+password")
     if (!user) return next(new AppError("Incorrect email or password", 400));
 
+    if (!user.isVerified){
+        return next(new AppError("user is not verified! please verify your email", 401))
+    }
+
     const isCorrect = await user.comparePassword(password, user.password);
     if (!isCorrect) return next(new AppError("Incorrect email or password", 400));
 
@@ -63,6 +154,19 @@ export const login = catchAsync(async (req, res, next) => {
 
     createSendToken(user, 200, res);
 });
+
+// export const autoLogin = catchAsync(async (req, res, next) => {
+//     const {user} = req;
+
+//     if(user) {
+//         res.status(200).json({
+//             status: "success",
+//             data: {user}
+//         })
+//     }
+
+//     res.send();
+// })
 
 export const verifyEmail = catchAsync(async (req, res, next) => {
     const {code} = req.params;

@@ -12,13 +12,13 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-export const sendEmail = async (to, subject, text) => {
+export const sendEmail = async (to, subject, html) => {
     try {
         const info = await transporter.sendMail({
             from: 'support <no-reply@chatbook.com>',
             to,
             subject,
-            text
+            html
         });
 
         console.log(`Email successfully sent to ${to}: ${info.messageId}`);
