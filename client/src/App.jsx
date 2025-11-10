@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import Posts from "./pages/Posts";
 
 // components
 import Nav from "./components/Nav";
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={user ? <Profile /> : <Login />} />
+        <Route path="/posts" element={user ? <Posts /> : <Login />} />
       </Routes>
     </>
   )

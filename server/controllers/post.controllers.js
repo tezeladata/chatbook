@@ -31,7 +31,13 @@ export const getPosts = async (req, res) => {
     
     const posts = await Post.find(mongoQuery).sort(sort);
 
-    res.status(200).json(posts);  
+    res.status(200).json({
+        status: "success",
+        length: posts.length,
+        data: {
+            posts
+        }
+    });  
 };
 
 export const getPost = catchAsync(async (req, res, next) => {
