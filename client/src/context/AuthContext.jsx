@@ -11,6 +11,31 @@ export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
 
     const navigate = useNavigate();
+
+    const autoLogin = async () => {
+        try {
+            const res = await fetch(`${API_URL}/auth/auto-login`, {
+                method: "POST",
+                credentials: "include"
+            });
+
+            const result = await res.json();
+
+            if (!res.ok) {
+                throw new Error(result.message);
+            };
+
+            setUser(result);
+
+            navigate("/profile")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        autoLogin();
+    }, []);
     
     const login = async (formObj) => {
         try {
@@ -54,8 +79,29 @@ export const AuthProvider = ({children}) => {
         }
     }
 
+    const logOut = async () => {
+        try {   
+            const res = await fetch(`${API_URL}/auth/logout`, {
+                method: "POST",
+                credentials: "include"
+            });
+
+            const result = await res.json();
+
+            if (!res.ok){
+                throw new Error(result.message);
+            };
+
+            setUser(null);
+            alert(result.message);
+            navigate("/login")
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{signUp, login, user}}>
+        <AuthContext.Provider value={{signUp, login, user, logOut}}>
             {children}
         </AuthContext.Provider>
     )

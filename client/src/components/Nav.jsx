@@ -2,7 +2,7 @@ import { Link } from "react-router"
 import { useAuth } from "../context/AuthContext";
 
 const Nav = () => {
-    const {user} = useAuth();
+    const {user, logOut} = useAuth();
     return (
         <header>
             <nav>
@@ -14,6 +14,7 @@ const Nav = () => {
                             <>
                                 <li><Link to={"/profile"}>Profile</Link></li>
                                 <li><Link to={"/posts"}>Posts</Link></li>
+                                <li onClick={logOut}>Log out</li>
                             </>
                         ) : (
                             <>

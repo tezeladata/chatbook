@@ -155,18 +155,21 @@ export const login = catchAsync(async (req, res, next) => {
     createSendToken(user, 200, res);
 });
 
-// export const autoLogin = catchAsync(async (req, res, next) => {
-//     const {user} = req;
+export const autoLogin = catchAsync(async (req, res, next) => {
+    const {user} = req;
 
-//     if(user) {
-//         res.status(200).json({
-//             status: "success",
-//             data: {user}
-//         })
-//     }
+    return res.status(200).json(user);
+})
 
-//     res.send();
-// })
+export const logOut = (req, res) => {
+    res.clearCookie('lt', {
+        httpOnly: true,
+        sameSite: "Lax",
+        secure: process.env.NODE_ENV === "dev" ? false: true
+    })
+
+    return res.status(200).json({message: "User logged out successfully"})
+}
 
 export const verifyEmail = catchAsync(async (req, res, next) => {
     const {code} = req.params;
