@@ -48,8 +48,56 @@ export const PostProvider = ({children}) => {
         }
     }
 
+    const deletePost = async (postId) => {
+        try {
+            const res = await fetch(`${API_URL}/posts/${postId}`, {
+                method: 'DELETE',
+                credentials: 'include'
+            });
+
+            if(!res.ok) {
+                const result = await res.json();
+                throw new Error(result.message);
+            }
+
+            setPosts(posts.filter(post => post._id !== postId));
+
+            alert('Post deleted succesfully!');
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    const updatePost = async (data, postId) => {
+        try {
+            const res = await fetch(`${API_URL}/posts/${postId}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data),
+                credentials: "include"
+            });
+
+            const result = await res.json();
+
+            if (!res.ok){
+                throw new Error(result.message);
+            }
+
+            const index = posts.findIndex(post => post._id === postId);
+            const copyArr = [...posts];
+            copyArr.splice(index, 1, result);
+            setPosts(copyArr);
+
+            alert("Post updated successfully")
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
-        <PostContext.Provider value={{getPosts, posts, addPost}}>
+        <PostContext.Provider value={{getPosts, posts, addPost, deletePost, updatePost}}>
             {children}
         </PostContext.Provider>
     )
