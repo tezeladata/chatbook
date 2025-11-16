@@ -14,10 +14,24 @@ dotenv.config();
 
 const app = express();
 
+const allowedOrigins = [
+  'https://chatbook.onrender.com',
+  'https://chatbook-xlr2.onrender.com',
+  'http://localhost:3000'
+];
+
 app.use(cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true
-}))
+  origin: function(origin, callback){
+    // allow requests with no origin (like mobile apps, curl)
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true
+}));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
