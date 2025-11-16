@@ -7,15 +7,21 @@ import { globalErrorHandler } from "./controllers/error.controller.js";
 import { authRouter } from "./routers/auth.router.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
 
 const app = express();
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     credentials: true
 }))
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, "dist")));
 
 if (process.env.NODE_ENV === "development"){
     app.use(morgan("dev"))
