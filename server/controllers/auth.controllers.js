@@ -18,9 +18,9 @@ const createSendToken = (user, statusCode, res) => {
 
     res.cookie('lt', token, {
         maxAge: process.env.COOKIE_EXPIRES*24*60*60*1000,
-        secure: process.env.NODE_ENV === "development" ? false : true,
+        secure: process.env.NODE_ENV === "production",
         httpOnly: true,
-        sameSite: "Lax"
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
     })
 
     res.status(statusCode).json({

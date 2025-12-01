@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 
 export const PostContext = createContext();
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = import.meta.env.VITE_SERVER_URL + "/api"
 
 export const PostProvider = ({children}) => {
     const [ posts, setPosts ] = useState([]);
