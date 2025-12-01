@@ -14,8 +14,18 @@ dotenv.config();
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173", // dev
+  "https://chatbook-xlr2.onrender.com" // production
+];
+
 app.use(cors({
-  origin: ["\"https://chatbook-xlr2.onrender.com\""],
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    callback(new Error("Not allowed by CORS"));
+  },
   credentials: true
 }));
 
