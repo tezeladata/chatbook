@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0514c66b-62a4-4af0-b951-8830c886a766" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/context/PostContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/context/PostContext.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/app.js" afterDir="false" />
-    </list>
+    <list default="true" id="0514c66b-62a4-4af0-b951-8830c886a766" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -71,7 +65,7 @@
       <workItem from="1763484690726" duration="1000" />
       <workItem from="1763901308975" duration="2000" />
       <workItem from="1764007276948" duration="1000" />
-      <workItem from="1764581975962" duration="645000" />
+      <workItem from="1764581975962" duration="981000" />
     </task>
     <servers />
   </component>

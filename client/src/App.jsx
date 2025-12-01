@@ -14,6 +14,7 @@ import { useAuth } from "./context/AuthContext";
 const App = () => {
   const {user} = useAuth();
   console.log(user)
+  console.log(import.meta.env.VITE_SERVER_URL);
 
   return (
     <>
