@@ -16,19 +16,17 @@ const signToken = user => {
 const createSendToken = (user, statusCode, res) => {
     const token = signToken(user);
 
-    res.cookie('lt', token, {
-        maxAge: process.env.COOKIE_EXPIRES*24*60*60*1000,
-        secure: process.env.NODE_ENV === "production",
-        httpOnly: true,
-        sameSite: "none"
-    })
+    const isDev = process.env.NODE_ENV === "development";
 
-    res.status(statusCode).json({
-        data: {
-            user
-        }
-    })
-}
+    res.cookie("lt", token, {
+        httpOnly: true,
+        secure: !isDev,        
+        sameSite: isDev ? "lax" : "none", 
+        maxAge: process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000,
+    });
+
+    res.status(statusCode).json({ data: { user } });
+};
 
 // Signup
 export const signUp = catchAsync(async (req, res, next) => {
@@ -165,7 +163,7 @@ export const logOut = (req, res) => {
     res.clearCookie('lt', {
         httpOnly: true,
         sameSite: "Lax",
-        secure: process.env.NODE_ENV === "dev" ? false: true
+        secure: process.env.NODE_ENV === "development" ? false: true
     })
 
     return res.status(200).json({message: "User logged out successfully"})
